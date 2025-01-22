@@ -1,0 +1,33 @@
+/* Путь: FluxÆther/src/pages/UnitsOfMeasurementPage.css */
+.units-page {
+    padding: 20px;
+}
+
+.unit-form {
+    margin-bottom: 20px;
+}
+
+    .unit-form input, .unit-form textarea {
+        margin-right: 10px;
+        padding: 5px;
+    }
+
+    .unit-form button {
+        padding: 5px 10px;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+

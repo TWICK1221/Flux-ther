@@ -1,0 +1,196 @@
+/* SettingsComponents.css */
+
+.settings-components {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+    .settings-components h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+.add-button {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .add-button:hover {
+        background-color: #0056b3;
+    }
+
+.content-components {
+    display: flex;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+    background-color: #f9f9f9;
+    
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .column h3 {
+        color: #555;
+        margin-bottom: 10px;
+        text-align: center;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+    }
+
+    .column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .column li {
+        background-color: #ffffff;
+        margin: 10px 0;
+        padding: 10px;
+        
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .column li:hover {
+            background-color: #eef;
+        }
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+    .tabs button {
+        flex: 1;
+        padding: 10px 20px;
+        border: none;
+        background-color: #f1f1f1;
+        cursor: pointer;
+        color: black;
+        font-size: 16px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .tabs button.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tabs button:hover {
+            background-color: #d9d9d9;
+        }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+    .modal-content h3 {
+        margin: 0 0 10px;
+        color: #333;
+        text-align: center;
+    }
+
+    .modal-content .form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+        padding: 10px;
+        
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .modal-content button {
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .modal-content button:hover {
+            background-color: #0056b3;
+        }
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+    .close-button:hover {
+        color: #555;
+    }
+
+.raw-material-list {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+    .raw-material-list h4 {
+        margin: 5px 0;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .raw-material-list ul {
+        list-style-type: disc;
+        margin: 0;
+        padding: 0;
+    }
+
+    .raw-material-list li {
+        font-size: 12px;
+        color: #555;
+    }
