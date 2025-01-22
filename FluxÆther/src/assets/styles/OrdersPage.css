@@ -1,0 +1,225 @@
+/* Переключатель видов отображения */
+.view-switcher .btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+    .view-switcher .btn:hover {
+        background-color: #2980b9;
+    }
+
+/* Кнопка серого цвета */
+.btn.grey {
+    background-color: #7f8c8d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+    .btn.grey:hover {
+        background-color: #6c757d;
+    }
+
+/* Список элементов заказа */
+.items-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Карточка заказа */
+.order-card {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Статистика заказов */
+.order-statistics {
+    display: flex; /* Элементы располагаются в строку */
+    align-items: center; /* Выравнивание по вертикали */
+    background-color: #f9f9f9; /* Светлый фон */
+    border: 1px solid #ddd; /* Граница */
+    border-radius: 10px; /* Скругленные углы */
+    padding: 5px 15px; /* Внутренние отступы */
+    font-size: 12px; /* Размер шрифта */
+    font-weight: bold; /* Жирный текст */
+    color: #333; /* Цвет текста */
+    gap: 10px; /* Расстояние между элементами */
+    max-width: 400px; /* Максимальная ширина */
+    margin-left: auto; /* Прижимаем элемент к правой стороне */
+}
+
+    .order-statistics p {
+        margin: 0; /* Убираем внешние отступы */
+        white-space: nowrap; /* Запрещаем перенос текста */
+        padding: 0 10px; /* Внутренние отступы */
+        border-right: 1px solid #ddd; /* Разделительная линия */
+    }
+
+        .order-statistics p:last-child {
+            border-right: none;
+        }
+
+.filters {
+    display: flex; /* Располагаем элементы в строку */
+    align-items: center; /* Выравнивание по вертикали */
+    justify-content: space-between; /* Размещаем элементы по краям контейнера */
+    width: 100%; /* Контейнер занимает всю ширину */
+    margin-bottom: 0px; /* Отступ снизу */
+    gap: 10px; /* Расстояние между элементами */
+}
+
+.single-button-dropdown {
+    display: flex; /* Располагаем элементы в строку */
+    align-items: center; /* Выравнивание по вертикали */
+    justify-content: space-between; /* Размещаем элементы по краям контейнера */
+    width: 100%; /* Контейнер занимает всю ширину */
+    margin-bottom: 10px; /* Отступ снизу */
+    gap: 10px; /* Расстояние между элементами */
+}
+
+/* Фильтры */
+.filters-container {
+    display: flex; /* Элементы располагаются в строку */
+    align-items: center; /* Выравнивание по вертикали */
+    justify-content: space-between; /* Размещаем элементы по краям экрана */
+    width: 100%; /* Контейнер занимает всю ширину */
+    margin-bottom: 0px; /* Отступ снизу */
+    gap: 10px; /* Расстояние между элементами */
+}
+
+/* Выпадающее меню фильтра */
+.single-button-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+.dropdown-filter {
+    flex: 0; /* Занимает минимально необходимую ширину */
+    
+}
+
+.dropdown-toggle {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+    .dropdown-toggle:hover {
+        background-color: #2980b9;
+    }
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    background-color: transparent;
+}
+
+    .dropdown-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .dropdown-item.active {
+        font-weight: bold;
+        color: #3498db;
+    }
+
+/* Поля для ввода диапазона дат */
+.date-range {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .date-range label {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .date-range input {
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+/* Кнопка применения фильтра */
+.apply-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+    .apply-btn:hover {
+        background-color: #27ae60;
+    }
+
+/* Таблица заказов */
+.orders-table .btn {
+    background-color: #7f8c8d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .orders-table .btn:hover {
+        background-color: #6c757d;
+    }
+
+.tr_order_head {
+    background-color: #e9ecef;
+}
+
+.tr_order_body {
+    background-color: #f8f9fa;
+}
+
+.orders-table {
+    margin-top: 0px;
+
+}
