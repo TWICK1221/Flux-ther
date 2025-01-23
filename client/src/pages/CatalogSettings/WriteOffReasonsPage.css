@@ -1,0 +1,33 @@
+/* Путь: FluxÆther/src/pages/WriteOffReasonsPage.css */
+.writeoff-reasons-page {
+    padding: 20px;
+}
+
+.reason-form {
+    margin-bottom: 20px;
+}
+
+    .reason-form input, .reason-form textarea {
+        margin-right: 10px;
+        padding: 5px;
+    }
+
+    .reason-form button {
+        padding: 5px 10px;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
