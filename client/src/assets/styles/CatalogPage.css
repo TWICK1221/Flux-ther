@@ -1,0 +1,10 @@
+.catalog-page-CatalogPage {
+    display: flex;
+    height: calc(100vh - 40px);
+}
+.settings-page-CatalogPage {
+    display: flex;
+    height: 100%;
+    height: calc(100% - 40px);
+}
+
