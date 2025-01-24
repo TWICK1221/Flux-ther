@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluxÆther", "FluxÆther.csproj", "{2F09E8E9-1772-4C1B-8A89-7597CEA53D28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluxÆtherclient", "..\client\FluxÆtherclient.csproj", "{80BD05F9-48E8-4307-B27E-F77065B6A41B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2F09E8E9-1772-4C1B-8A89-7597CEA53D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F09E8E9-1772-4C1B-8A89-7597CEA53D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F09E8E9-1772-4C1B-8A89-7597CEA53D28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80BD05F9-48E8-4307-B27E-F77065B6A41B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80BD05F9-48E8-4307-B27E-F77065B6A41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80BD05F9-48E8-4307-B27E-F77065B6A41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80BD05F9-48E8-4307-B27E-F77065B6A41B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
