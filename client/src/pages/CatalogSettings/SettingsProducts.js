@@ -104,21 +104,6 @@ function SettingsProducts() {
                 +
             </button>
 
-            <div className="category-list">
-                <h3>Категории</h3>
-                <ul>
-                    {categories.map(category => (
-                        <li
-                            key={category.id}
-                            className="category-item"
-                            onClick={() => handleCategoryClick(category)}
-                        >
-                            {category.name}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
             <div className="product-list">
                 <table>
                     <thead>
