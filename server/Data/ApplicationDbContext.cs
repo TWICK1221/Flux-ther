@@ -6,6 +6,9 @@ namespace CRMsystem.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        // DbSet для сущностей
+        
+        public DbSet<UserWeb> UserWebs { get; set; }
         public DbSet<SettingSetting> SettingSettings { get; set; }
         public DbSet<WorkshopType> WorkshopTypes { get; set; }
         public DbSet<SalesPoint> SalesPoints { get; set; }
@@ -69,6 +72,7 @@ namespace CRMsystem.Data
 
             modelBuilder.Entity<Certificate>()
                 .Property(c => c.Amount)
+                .HasPrecision(18, 2) // Установка точности для Amount
                 .IsRequired();
 
             // Конфигурация TotalAmount для Order
@@ -89,6 +93,21 @@ namespace CRMsystem.Data
             modelBuilder.Entity<OrderItem>()
                 .Property(oi => oi.Quantity)
                 .HasPrecision(18, 2);
+
+            // Конфигурация Percentage для Discount
+            modelBuilder.Entity<Discount>()
+                .Property(d => d.Percentage)
+                .HasPrecision(5, 2); // Пример: до 5 знаков, 2 из которых после запятой
+
+            // Конфигурация Percentage для Markup
+            modelBuilder.Entity<Markup>()
+                .Property(m => m.Percentage)
+                .HasPrecision(5, 2);
+
+            // Конфигурация Quantity для RawMaterial
+            modelBuilder.Entity<RawMaterial>()
+                .Property(r => r.Quantity)
+                .HasPrecision(10, 3);
 
             // Конфигурация PaymentOption
             modelBuilder.Entity<Order>()
