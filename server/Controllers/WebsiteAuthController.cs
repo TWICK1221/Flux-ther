@@ -24,6 +24,12 @@ namespace FluxÆther.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
+            if (request == null || string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                Console.WriteLine("Неверный запрос авторизации");
+                return BadRequest(new { message = "Некорректные данные для авторизации" });
+            }
+
             Console.WriteLine($"Проверяем логин: {request.Username}");
 
             var user = _context.UserWebs.FirstOrDefault(u => u.Username == request.Username);
