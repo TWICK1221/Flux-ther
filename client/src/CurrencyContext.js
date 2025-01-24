@@ -3,6 +3,15 @@ import axios from 'axios';
 
 const CurrencyContext = createContext();
 
+// Маппинг ISO-кодов валют к их символам
+const currencySymbols = {
+    RUB: '₽',
+    USD: '$',
+    EUR: '€',
+    KZT: '₸',
+};
+
+// Провайдер контекста валюты
 export const CurrencyProvider = ({ children }) => {
     // Проверка значения в localStorage
     const savedCurrency = localStorage.getItem('currency') || 'USD';
@@ -37,12 +46,17 @@ export const CurrencyProvider = ({ children }) => {
         localStorage.setItem('currency', newCurrency);
     };
 
+    // Функция для получения символа валюты
+    const getCurrencySymbol = () => {
+        return currencySymbols[currency] || currency; // Если нет символа, вернуть код
+    };
+
     if (loading) {
         return <div>Загрузка...</div>; // Сообщение о загрузке
     }
 
     return (
-        <CurrencyContext.Provider value={{ currency, setCurrency: updateCurrency }}>
+        <CurrencyContext.Provider value={{ currency, setCurrency: updateCurrency, getCurrencySymbol }}>
             {children}
         </CurrencyContext.Provider>
     );
