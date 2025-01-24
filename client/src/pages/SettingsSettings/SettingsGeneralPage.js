@@ -10,7 +10,7 @@ const SettingsGeneralPage = () => {
         phoneMask: '',
         timeZone: '',
         dayShift: '00',
-        currency: currency || 'RUB', // Используем значение из контекста
+        currency: currency || '', // Используем значение из контекста
         paymentOptions: '',
         orderNumbering: '',
         newOrderView: '',
@@ -59,6 +59,24 @@ const SettingsGeneralPage = () => {
         // Обновление валюты в контексте при изменении
         if (name === 'currency') {
             setCurrency(value);
+        }
+    };
+    useEffect(() => {
+        if (!['RUB', 'USD', 'EUR', 'KZT'].includes(currency)) {
+            setCurrency('RUB'); // Устанавливаем значение по умолчанию
+        }
+    }, [currency, setCurrency]);
+
+    const formatPrice = (value) => {
+        try {
+            const formatter = new Intl.NumberFormat('ru-RU', {
+                style: 'currency',
+                currency: settings.currency, // Например, RUB, USD, EUR, KZT
+            });
+            return formatter.format(value);
+        } catch (error) {
+            console.error('Ошибка форматирования цены:', error);
+            return value;
         }
     };
 
@@ -145,10 +163,10 @@ const SettingsGeneralPage = () => {
                                 value={settings.currency}
                                 onChange={handleInputChange}
                             >
-                                <option value="RUB">Российский рубль</option>
-                                <option value="USD">Доллар США</option>
-                                <option value="EUR">Евро</option>
-                                <option value="KZT">Казахстанский тенге</option>
+                                <option value="RUB">Российский рубль (₽)</option>
+                                <option value="USD">Доллар США ($)</option>
+                                <option value="EUR">Евро (€)</option>
+                                <option value="KZT">Тенге (₸)</option>
                             </select>
                         </td>
                     </tr>
