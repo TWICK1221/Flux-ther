@@ -8,7 +8,7 @@ function OrdersPage() {
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [paymentOptions, setPaymentOptions] = useState([]);
     const [viewMode, setViewMode] = useState(() => localStorage.getItem("viewMode") || "list");
-    const [filter, setFilter] = useState("today"); // "today", "yesterday", "range"
+    const [filter, setFilter] = useState("today");
     const [dateRange, setDateRange] = useState({ start: "", end: "" });
     const [stats, setStats] = useState({ totalOrders: 0, averageOrder: 0, totalRevenue: 0 });
     const [dropdownOpen, setDropdownOpen] = useState(false); // Управление открытием фильтра
@@ -303,7 +303,7 @@ function OrdersPage() {
                                         <div className="order-actions">
                                             <button
                                                 className="btn grey"
-                                                onClick={() => navigate(`/orders/edit/${order.orderId}`)}
+                                                onClick={() => navigate(`/app/orders/edit/${order.orderId}`)}
                                             >
                                                 Изменить
                                             </button>
