@@ -8,12 +8,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.FileProviders;
 using CRMsystem.Models; // Импорт модели UserWeb
-using BCrypt.Net; // Для работы с хэшированием
+using BCrypt.Net;
+using FluxÆther.Data; // Для работы с хэшированием
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Настройка сервисов
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabaseTemplate")));
+builder.Services.AddDbContext<MasterDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Добавление SignalR
