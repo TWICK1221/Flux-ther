@@ -1,5 +1,17 @@
-/* Переключатель видов отображения */
-.view-switcher .btn {
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Чтобы не было двойной прокрутки */
+}
+
+.content {
+    height: 100%; /* Высота экрана */
+    overflow-y: auto; /* Вертикальная прокрутка */
+    overflow-x: hidden; /* Отключение горизонтальной прокрутки */
+}
+    /* Переключатель видов отображения */
+    .view-switcher .btn {
     padding: 10px 20px;
     border: none;
     background-color: #3498db;
@@ -33,6 +45,8 @@
     padding: 0;
     margin: 0;
     list-style: none;
+    overflow-x: auto;
+    height: calc(100% - 40px);
 }
 
 .item-row {
@@ -205,11 +219,17 @@
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
+
+}
+.orders-table {
+    height: 100vh; /* Высота экрана */
+    overflow-y: auto; /* Вертикальная прокрутка */
+    overflow-x: hidden; /* Отключение горизонтальной прокрутки */
 }
 
-    .orders-table .btn:hover {
-        background-color: #6c757d;
-    }
+.orders-table .btn:hover {
+    background-color: #6c757d;
+}
 
 .tr_order_head {
     background-color: #e9ecef;
@@ -221,5 +241,7 @@
 
 .orders-table {
     margin-top: 0px;
-
+    height: 100vh; /* Высота экрана */
+    overflow-y: auto; /* Вертикальная прокрутка */
+    overflow-x: hidden; /* Отключение горизонтальной прокрутки */
 }

@@ -50,7 +50,6 @@ a {
     justify-content: center;
     width: 40px; /* Ширина иконки */
     height: 40px; /* Высота иконки */
-    /* background-color: #f4f4f4;  Цвет фона */
     border-radius: 1%; /* Скругление для иконки */
     /box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /*Тень */
 }

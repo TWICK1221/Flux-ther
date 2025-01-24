@@ -38,6 +38,7 @@
     }
 
 .content {
+    font-family: 'StadioNow', sans-serif;
     flex-grow: 1;
     padding: 0px;
     width: 100%;
@@ -45,5 +46,5 @@
     background-color: #fff;
     box-sizing: border-box;
     overflow-y: auto;
-    height: calc(100vh - 40px);
+    height: calc(100% - 40px);
 }
