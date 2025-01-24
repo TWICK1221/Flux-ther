@@ -13,7 +13,7 @@ function Header() {
             <nav className="header-menu">
                 <ul>
                     <li>
-                        <Link to="/new-order">
+                        <Link to="/app/new-order">
                             <div className="icon-button">
                                 <img
                                     src={require('../assets/icons/plus.svg').default}
@@ -25,7 +25,7 @@ function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/orders">
+                        <Link to="/app/orders">
                             <img
                                 src={require('../assets/icons/bars.svg').default}
                                 alt="bars"
@@ -35,7 +35,7 @@ function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/catalog">
+                        <Link to="/app/catalog">
                             <img
                                 src={require('../assets/icons/book.svg').default}
                                 alt="book"
@@ -45,7 +45,7 @@ function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/store">
+                        <Link to="/app/store">
                             <img
                                 src={require('../assets/icons/store.svg').default}
                                 alt="store"
@@ -55,7 +55,7 @@ function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/cash">
+                        <Link to="/app/cash">
                             <img
                                 src={require('../assets/icons/money.svg').default}
                                 alt="money"
@@ -65,7 +65,7 @@ function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/stats">
+                        <Link to="/app/stats">
                             <img
                                 src={require('../assets/icons/stats.svg').default}
                                 alt="stats"
@@ -75,7 +75,7 @@ function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/settings">
+                        <Link to="/app/settings">
                             <img
                                 src={require('../assets/icons/setting.svg').default}
                                 alt="setting"
