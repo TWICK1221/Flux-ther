@@ -1,28 +1,44 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using CRMsystem.Data;
-using CRMsystem.Hubs;
+﻿using FluxÆther.Data;
+using FluxÆther.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.FileProviders;
-using CRMsystem.Models; // Импорт модели UserWeb
-using BCrypt.Net;
-using FluxÆther.Data; // Для работы с хэшированием
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddScoped<DatabaseHelper>();
 // Настройка сервисов
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabaseTemplate")));
 builder.Services.AddDbContext<MasterDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MasterDb")));
 
-// Добавление SignalR
-builder.Services.AddSignalR();
+// Регистрация IHttpContextAccessor
+builder.Services.AddHttpContextAccessor();
 
-// Настройка контроллеров
+// Регистрация ApplicationDbContext с поддержкой динамического подключения
+builder.Services.AddScoped<ApplicationDbContext>((serviceProvider) =>
+{
+    var httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
+    var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst("UserId")?.Value;
+
+    if (userIdClaim != null && int.TryParse(userIdClaim, out var userId))
+    {
+        var masterDbContext = serviceProvider.GetRequiredService<MasterDbContext>();
+        var userDatabase = masterDbContext.UserDatabases.FirstOrDefault(ud => ud.UserId == userId);
+
+        if (userDatabase != null)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseSqlServer(userDatabase.ConnectionString);
+            return new ApplicationDbContext(optionsBuilder.Options, userDatabase.ConnectionString);
+        }
+    }
+
+    throw new InvalidOperationException("Не удалось определить базу данных пользователя.");
+});
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -30,27 +46,12 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // camelCase
     });
 
-// Добавление Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "FluxÆther API", Version = "v1" });
 });
 
-// Настройка аутентификации через JWT
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("123")), // Секретный ключ для JWT
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
-
-// Добавление политики CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyOrigin", policy =>
@@ -61,62 +62,74 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Конфигурация приложения
+// Настройка JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("5f4dcc3b5aa765d61d8327deb882cf99")),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
 var app = builder.Build();
 
 // Инициализация базы данных
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var masterContext = scope.ServiceProvider.GetRequiredService<MasterDbContext>();
+    masterContext.Database.Migrate();
 
-    // Если пользователь отсутствует, создаём его
-    if (!context.UserWebs.Any())
+    // Добавление администратора, если отсутствует
+    if (!masterContext.UserWebs.Any())
     {
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword("123"); // Пароль "123"
-        context.UserWebs.Add(new UserWeb
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword("5f4dcc3b5aa765d61d8327deb882cf99");
+        masterContext.UserWebs.Add(new UserWeb
         {
-            Username = "admin", // Логин "admin"
+            Username = "admin",
             PasswordHash = hashedPassword
         });
-        context.SaveChanges();
+        masterContext.SaveChanges();
+    }
+
+    // Миграции для пользовательских баз данных
+    var userDatabases = masterContext.UserDatabases.ToList();
+    foreach (var userDb in userDatabases)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        optionsBuilder.UseSqlServer(userDb.ConnectionString);
+
+        using (var userDbContext = new ApplicationDbContext(optionsBuilder.Options, userDb.ConnectionString))
+        {
+            userDbContext.Database.Migrate();
+        }
     }
 }
 
-// Применение политики CORS
+// Настройки Middleware
 app.UseCors("AllowMyOrigin");
 
-// Обработка ошибок и Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FluxÆther API v1"));
 }
-else
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
-}
 
-// Перенаправление HTTP на HTTPS
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
-// Подключение статических файлов
-app.UseDefaultFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(@"C:\1\Тест\client\build"), // Указываем путь к build клиента
-    RequestPath = "" // Устанавливаем корневой путь
-});
-
-// Настройка аутентификации и авторизации
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Настройка маршрутов
-app.UseRouting();
 app.MapControllers();
-app.MapHub<OrderHub>("/orderHub");
-app.MapFallbackToFile("/index.html"); // Роут для фронтенда
 
-// Запуск приложения
 app.Run();
