@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CRMsystem.Pages
+namespace FluxÆther.Pages
 {
     public class IndexModel : PageModel
     {
