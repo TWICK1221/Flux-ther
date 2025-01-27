@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 
-namespace CRMsystem.Hubs;
+namespace FluxÆther.Hubs;
 
 public class OrderHub : Hub
 {
