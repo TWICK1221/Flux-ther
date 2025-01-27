@@ -1,6 +1,6 @@
-﻿// Путь к файлу: CRMsystem/Models/Category.cs
+﻿// Путь к файлу: FluxÆther/Models/Category.cs
 
-namespace CRMsystem.Models
+namespace FluxÆther.Models
 {
     public class Category
     {

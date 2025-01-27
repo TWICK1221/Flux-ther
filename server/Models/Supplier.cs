@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/Supplier.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/Supplier.cs
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления поставщика.

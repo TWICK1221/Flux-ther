@@ -1,4 +1,4 @@
-﻿namespace CRMsystem.Models
+﻿namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления улицы.

@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/WriteOffReason.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/WriteOffReason.cs
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления причин списания.

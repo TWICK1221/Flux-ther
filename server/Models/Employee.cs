@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CRMsystem.Models
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления сотрудника.

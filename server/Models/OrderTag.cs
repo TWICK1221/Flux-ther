@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/OrderTag.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/OrderTag.cs
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления отметок заказа.

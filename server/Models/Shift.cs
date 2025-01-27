@@ -1,4 +1,4 @@
-﻿using CRMsystem.Models;
+﻿using FluxÆther.Models;
 
 /// <summary>
 /// Модель данных для представления смены сотрудника.

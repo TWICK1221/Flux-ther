@@ -1,5 +1,5 @@
 ﻿// DTO для передачи данных о сертификатах между клиентом и сервером
-namespace CRMsystem.Models
+namespace FluxÆther.Models
 {
     public class CertificateDto
     {

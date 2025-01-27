@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/UnitOfMeasurement.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/UnitOfMeasurement.cs
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления единицы измерения.

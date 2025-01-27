@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/Discount.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/Discount.cs
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления скидок.

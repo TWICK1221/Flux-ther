@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CRMsystem.Models
+namespace FluxÆther.Models
 {
     public class UserWeb
     {

@@ -1,18 +1,18 @@
-using CRMsystem.Models;
+п»їusing FluxГ†ther.Models;
 using System.Collections.Generic;
 
 /// <summary>
-/// Модель данных для представления заказа.
-/// Используется для хранения информации о заказах, связанных клиентах и товарах.
+/// РњРѕРґРµР»СЊ РґР°РЅРЅС‹С… РґР»СЏ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ Р·Р°РєР°Р·Р°.
+/// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ Р·Р°РєР°Р·Р°С…, СЃРІСЏР·Р°РЅРЅС‹С… РєР»РёРµРЅС‚Р°С… Рё С‚РѕРІР°СЂР°С….
 /// </summary>
 public class Order
 {
-    public int Id { get; set; } // Уникальный идентификатор заказа
-    public int? PaymentOptionId { get; set; } // Внешний ключ для PaymentOption
-    public PaymentOption PaymentOption { get; set; } // Навигационное свойство
-    public DateTime OrderDate { get; set; } // Дата и время оформления заказа
-    public decimal TotalAmount { get; set; } // Общая сумма заказа
-    public string PaymentMethod { get; set; } // Поле для метода оплаты
-    public Client Client { get; set; } // Клиент, связанный с заказом
-    public List<OrderItem> Items { get; set; } // Список товаров, входящих в заказ
+    public int Id { get; set; } // РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РєР°Р·Р°
+    public int? PaymentOptionId { get; set; } // Р’РЅРµС€РЅРёР№ РєР»СЋС‡ РґР»СЏ PaymentOption
+    public PaymentOption PaymentOption { get; set; } // РќР°РІРёРіР°С†РёРѕРЅРЅРѕРµ СЃРІРѕР№СЃС‚РІРѕ
+    public DateTime OrderDate { get; set; } // Р”Р°С‚Р° Рё РІСЂРµРјСЏ РѕС„РѕСЂРјР»РµРЅРёСЏ Р·Р°РєР°Р·Р°
+    public decimal TotalAmount { get; set; } // РћР±С‰Р°СЏ СЃСѓРјРјР° Р·Р°РєР°Р·Р°
+    public string PaymentMethod { get; set; } // РџРѕР»Рµ РґР»СЏ РјРµС‚РѕРґР° РѕРїР»Р°С‚С‹
+    public Client Client { get; set; } // РљР»РёРµРЅС‚, СЃРІСЏР·Р°РЅРЅС‹Р№ СЃ Р·Р°РєР°Р·РѕРј
+    public List<OrderItem> Items { get; set; } // РЎРїРёСЃРѕРє С‚РѕРІР°СЂРѕРІ, РІС…РѕРґСЏС‰РёС… РІ Р·Р°РєР°Р·
 }

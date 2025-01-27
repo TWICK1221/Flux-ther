@@ -1,7 +1,7 @@
-﻿// Путь к файлу: CRMsystem/Models/Product.cs
+﻿// Путь к файлу: FluxÆther/Models/Product.cs
 using System.ComponentModel.DataAnnotations;
 
-namespace CRMsystem.Models
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления продукта.

@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/Certificate.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/Certificate.cs
+namespace FluxÆther.Models
 {
     public class Certificate
     {

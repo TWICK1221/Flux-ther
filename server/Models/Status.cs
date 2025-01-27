@@ -1,5 +1,5 @@
-﻿// Путь: CRMsystem/Models/Status.cs
-namespace CRMsystem.Models
+﻿// Путь: FluxÆther/Models/Status.cs
+namespace FluxÆther.Models
 {
     /// <summary>
     /// Модель данных для представления статуса.
