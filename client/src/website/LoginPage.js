@@ -1,47 +1,54 @@
 ﻿import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+import CryptoJS from 'crypto-js';
 
 function LoginPage() {
-    const [username, setUsername] = useState(''); // Имя пользователя
-    const [password, setPassword] = useState(''); // Пароль
-    const [error, setError] = useState(''); // Ошибка авторизации
-    const [loading, setLoading] = useState(false); // Состояние загрузки
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
-        // Проверка, что поля заполнены
-        if (!username || !password) {
+        const sanitizedUsername = DOMPurify.sanitize(username);
+        const sanitizedPassword = DOMPurify.sanitize(password);
+
+        if (!sanitizedUsername || !sanitizedPassword) {
             setError('Пожалуйста, заполните все поля');
             return;
         }
 
-        setLoading(true); // Устанавливаем состояние загрузки
-        setError(''); // Сбрасываем ошибку
+        if (sanitizedPassword.length < 6) {
+            setError('Пароль должен содержать не менее 6 символов');
+            return;
+        }
+
+        setLoading(true);
+        setError('');
 
         try {
-            console.log('Отправка данных:', { username, password });
-
-            // Отправка запроса на сервер
-            const response = await axios.post('http://localhost:3001/api/website-auth/login', { username, password });
-            console.log('Ответ сервера:', response.data);
+            const response = await axios.post('http://localhost:3001/api/website-auth/login', {
+                username: sanitizedUsername,
+                password: sanitizedPassword,
+            });
 
             const { token } = response.data;
+            const encryptedToken = CryptoJS.AES.encrypt(token, 'your-secret-key').toString();
+            localStorage.setItem('token', encryptedToken);
 
-            // Сохранение токена в localStorage
-            localStorage.setItem('token', token);
-
-            // Перенаправление в приложение
-            window.location.href = '/app/new-order';
+            navigate('/app/new-order');
         } catch (error) {
-            console.error('Ошибка запроса:', error);
-
-            // Отображение ошибки от сервера или стандартного сообщения
-            if (error.response && error.response.data && error.response.data.message) {
-                setError(error.response.data.message);
-            } else {
+            if (error.response) {
+                setError(error.response.data.message || 'Ошибка сервера');
+            } else if (error.request) {
                 setError('Ошибка подключения к серверу');
+            } else {
+                setError('Ошибка при отправке запроса');
             }
         } finally {
-            setLoading(false); // Снимаем состояние загрузки
+            setLoading(false);
         }
     };
 
@@ -70,14 +77,21 @@ function LoginPage() {
                 disabled={loading}
                 style={{
                     padding: '10px 20px',
-                    backgroundColor: '#4CAF50',
+                    backgroundColor: loading ? '#ccc' : '#4CAF50',
                     color: 'white',
                     border: 'none',
                     borderRadius: '4px',
                     cursor: loading ? 'not-allowed' : 'pointer',
                 }}
             >
-                {loading ? 'Загрузка...' : 'Войти'}
+                {loading ? (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <span>Загрузка...</span>
+                        <div className="spinner" style={{ marginLeft: '10px' }}></div>
+                    </div>
+                ) : (
+                    'Войти'
+                )}
             </button>
 
             {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
