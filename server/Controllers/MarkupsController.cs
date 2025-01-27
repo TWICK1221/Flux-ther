@@ -1,10 +1,10 @@
-﻿// Путь: CRMsystem/Controllers/MarkupsController.cs
-using CRMsystem.Data;
-using CRMsystem.Models;
+﻿// Путь: FluxÆther/Controllers/MarkupsController.cs
+using FluxÆther.Data;
+using FluxÆther.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CRMsystem.Controllers
+namespace FluxÆther.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -1,10 +1,10 @@
 ﻿// Путь: Controllers/StreetsController.cs
-using CRMsystem.Data;
-using CRMsystem.Models;
+using FluxÆther.Data;
+using FluxÆther.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CRMsystem.Controllers
+namespace FluxÆther.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

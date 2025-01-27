@@ -1,5 +1,5 @@
-﻿using CRMsystem.Data;
-using CRMsystem.Models;
+﻿using FluxÆther.Data;
+using FluxÆther.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

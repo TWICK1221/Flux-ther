@@ -3,7 +3,9 @@ using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using FluxÆther.Data;
 using Microsoft.EntityFrameworkCore;
-using CRMsystem.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using FluxÆther.Models;
 
 namespace FluxÆther.Controllers
 {
@@ -12,10 +14,12 @@ namespace FluxÆther.Controllers
     public class UserController : ControllerBase
     {
         private readonly MasterDbContext _masterDbContext;
+        private readonly IConfiguration _configuration;
 
-        public UserController(MasterDbContext masterDbContext)
+        public UserController(MasterDbContext masterDbContext, IConfiguration configuration)
         {
             _masterDbContext = masterDbContext ?? throw new ArgumentNullException(nameof(masterDbContext));
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -26,47 +30,24 @@ namespace FluxÆther.Controllers
         [HttpPost("create")]
         public IActionResult CreateUserDatabase([FromBody] CreateUserRequest request)
         {
-            if (request == null)
+            if (request == null || request.UserId <= 0)
             {
                 return BadRequest(new { message = "Неверный запрос." });
             }
 
             var dbName = $"UserDb_{request.UserId}";
-            var connectionString = $"Server=(localdb)\\MSSQLLocalDB;Database={dbName};Trusted_Connection=True;MultipleActiveResultSets=true";
+            var connectionString = $"Server=(localdb)\\MSSQLLocalDB;Database={dbName};Trusted_Connection=True;";
 
             try
             {
-                // Лог создания базы данных
-                Console.WriteLine($"Начинаем создание базы данных: {dbName}");
-
-                // Создание новой базы данных
-                using (var connection = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Trusted_Connection=True;"))
-                {
-                    connection.Open();
-                    using var command = connection.CreateCommand();
-                    command.CommandText = $"CREATE DATABASE [{dbName}]";
-                    command.ExecuteNonQuery();
-                }
-
-                Console.WriteLine($"База данных {dbName} успешно создана.");
+                // Создание базы данных на основе шаблона
+                CreateDatabaseFromTemplate(dbName);
 
                 // Применение миграций
                 ApplyMigrations(connectionString);
 
-                Console.WriteLine($"Миграции успешно применены к базе данных {dbName}.");
-
                 // Сохранение информации о базе данных
-                var userDatabase = new UserDatabase
-                {
-                    UserId = request.UserId,
-                    DatabaseName = dbName,
-                    ConnectionString = connectionString
-                };
-
-                _masterDbContext.UserDatabases.Add(userDatabase);
-                _masterDbContext.SaveChanges();
-
-                Console.WriteLine($"Информация о базе данных {dbName} сохранена в MasterDbContext.");
+                SaveDatabaseInfo(request.UserId, dbName, connectionString);
 
                 return Ok(new { message = $"База данных для пользователя {request.UserId} успешно создана." });
             }
@@ -78,6 +59,30 @@ namespace FluxÆther.Controllers
         }
 
         /// <summary>
+        /// Создание базы данных из шаблона.
+        /// </summary>
+        /// <param name="dbName">Имя создаваемой базы данных.</param>
+        private void CreateDatabaseFromTemplate(string dbName)
+        {
+            using var connection = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Trusted_Connection=True;");
+            connection.Open();
+
+            // Создаём новую базу данных
+            var createDbCommand = connection.CreateCommand();
+            createDbCommand.CommandText = $"CREATE DATABASE [{dbName}]";
+            createDbCommand.ExecuteNonQuery();
+
+            // Копируем данные из шаблонной базы TemplateDatabase
+            var restoreDbCommand = connection.CreateCommand();
+            restoreDbCommand.CommandText = $@"
+                USE master;
+                RESTORE DATABASE [{dbName}] FROM DISK = 'C:\\Backups\\TemplateDatabase.bak'
+                WITH MOVE 'TemplateDatabase_Data' TO 'C:\\SQLData\\{dbName}_Data.mdf',
+                     MOVE 'TemplateDatabase_Log' TO 'C:\\SQLData\\{dbName}_Log.ldf'";
+            restoreDbCommand.ExecuteNonQuery();
+        }
+
+        /// <summary>
         /// Применение миграций к базе данных.
         /// </summary>
         /// <param name="connectionString">Строка подключения к базе данных.</param>
@@ -85,21 +90,12 @@ namespace FluxÆther.Controllers
         {
             try
             {
-                Console.WriteLine($"Начинаем применение миграций для базы данных {connectionString}.");
-
                 var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                optionsBuilder.UseSqlServer(connectionString, options =>
-                {
-                    options.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
-                });
+                optionsBuilder.UseSqlServer(connectionString);
 
-                using var context = new ApplicationDbContext(optionsBuilder.Options);
+                // Создание экземпляра ApplicationDbContext с передачей строки подключения
+                using var context = new ApplicationDbContext(optionsBuilder.Options, connectionString);
                 context.Database.Migrate();
-
-                Console.WriteLine("Миграции успешно применены.");
             }
             catch (Exception ex)
             {
@@ -107,14 +103,32 @@ namespace FluxÆther.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Сохранение информации о базе данных в MasterDbContext.
+        /// </summary>
+        /// <param name="userId">ID пользователя.</param>
+        /// <param name="dbName">Имя базы данных.</param>
+        /// <param name="connectionString">Строка подключения к базе данных.</param>
+        private void SaveDatabaseInfo(int userId, string dbName, string connectionString)
+        {
+            var userDatabase = new UserDatabase
+            {
+                UserId = userId,
+                DatabaseName = dbName,
+                ConnectionString = connectionString
+            };
+
+            _masterDbContext.UserDatabases.Add(userDatabase);
+            _masterDbContext.SaveChanges();
+        }
     }
 
     /// <summary>
-    /// Модель для запроса создания пользователя.
+    /// Модель запроса на создание базы данных пользователя.
     /// </summary>
     public class CreateUserRequest
     {
         public int UserId { get; set; }
-        public string DatabaseName { get; set; }
     }
 }

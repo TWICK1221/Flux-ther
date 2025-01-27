@@ -1,9 +1,9 @@
-﻿using CRMsystem.Models;
+﻿using FluxÆther.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CRMsystem.Data;
+using FluxÆther.Data;
 
-namespace CRMsystem.Controllers
+namespace FluxÆther.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

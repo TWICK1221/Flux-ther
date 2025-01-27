@@ -1,10 +1,10 @@
-﻿// Путь: CRMsystem/Controllers/CertificatesController.cs
+﻿// Путь: FluxÆther/Controllers/CertificatesController.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CRMsystem.Data;
-using CRMsystem.Models;
+using FluxÆther.Data;
+using FluxÆther.Models;
 
-namespace CRMsystem.Controllers
+namespace FluxÆther.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

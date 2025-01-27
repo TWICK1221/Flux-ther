@@ -1,12 +1,11 @@
-﻿// Controllers/CategoriesController.cs
-
-using Microsoft.AspNetCore.Mvc;
-using CRMsystem.Data;
-using System.Linq;
-using CRMsystem.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using FluxÆther.Data;
+using FluxÆther.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System;
 
-namespace CRMsystem.Controllers
+namespace FluxÆther.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,7 +21,6 @@ namespace CRMsystem.Controllers
         [HttpGet]
         public IActionResult GetCategories()
         {
-            // Возвращаем список категорий без циклических ссылок
             var categories = _context.Categories
                 .Select(c => new
                 {
@@ -33,27 +31,47 @@ namespace CRMsystem.Controllers
 
             return Ok(categories);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryDto categoryDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var category = new Category
+            try
             {
-                Name = categoryDto.Name
-            };
+                if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("Некорректные данные в запросе.");
+                    return BadRequest(ModelState);
+                }
 
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+                var category = new Category
+                {
+                    Name = categoryDto.Name,
+                    Color = categoryDto.Color // Убедитесь, что цвет также сохраняется
+                };
 
-            return CreatedAtAction(nameof(GetCategories), new { id = category.Id }, category);
+                _context.Categories.Add(category);
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine($"Категория '{category.Name}' успешно создана.");
+                return CreatedAtAction(nameof(GetCategories), new { id = category.Id }, category);
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"Ошибка при обновлении базы данных: {ex.Message}");
+                return StatusCode(500, new { message = "Ошибка при обновлении базы данных", error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Неизвестная ошибка: {ex.Message}");
+                return StatusCode(500, new { message = "Неизвестная ошибка", error = ex.Message });
+            }
         }
+
         [HttpGet("{categoryId}/products")]
         public IActionResult GetProductsByCategory(int categoryId)
         {
             var category = _context.Categories
-                .Include(c => c.Products) // Загрузка связанных товаров
+                .Include(c => c.Products)
                 .FirstOrDefault(c => c.Id == categoryId);
 
             if (category == null)
@@ -70,6 +88,7 @@ namespace CRMsystem.Controllers
 
             return Ok(products);
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryDto categoryDto)
         {
@@ -80,7 +99,6 @@ namespace CRMsystem.Controllers
             if (category == null)
                 return NotFound("Category not found");
 
-            // Обновляем поля категории
             category.Name = categoryDto.Name;
             category.Color = categoryDto.Color;
 
@@ -89,6 +107,7 @@ namespace CRMsystem.Controllers
 
             return Ok(category);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
@@ -96,11 +115,19 @@ namespace CRMsystem.Controllers
             if (category == null)
                 return NotFound("Category not found");
 
-            // Удаляем категорию
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
+    }
+
+    public class CategoryDto
+    {
+        [Required(ErrorMessage = "Имя категории обязательно.")]
+        [StringLength(100, ErrorMessage = "Имя категории должно быть не длиннее 100 символов.")]
+        public string Name { get; set; }
+
+        public string Color { get; set; }
     }
 }

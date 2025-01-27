@@ -1,8 +1,9 @@
-using CRMsystem.Data;
-using CRMsystem.Models;
+п»їusing FluxГ†ther.Models;
+using FluxГ†ther.Data;
+using FluxГ†ther.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CRMsystem.Controllers
+namespace FluxГ†ther.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,7 +27,7 @@ namespace CRMsystem.Controllers
         {
             if (string.IsNullOrWhiteSpace(option.Name))
             {
-                return BadRequest("Название варианта оплаты не может быть пустым.");
+                return BadRequest("РќР°Р·РІР°РЅРёРµ РІР°СЂРёР°РЅС‚Р° РѕРїР»Р°С‚С‹ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј.");
             }
 
             _context.PaymentOptions.Add(option);

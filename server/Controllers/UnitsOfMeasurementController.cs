@@ -1,10 +1,10 @@
-﻿// Путь: CRMsystem/Controllers/UnitsOfMeasurementController.cs
-using CRMsystem.Data;
-using CRMsystem.Models;
+﻿// Путь: FluxÆther/Controllers/UnitsOfMeasurementController.cs
+using FluxÆther.Data;
+using FluxÆther.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CRMsystem.Controllers
+namespace FluxÆther.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
