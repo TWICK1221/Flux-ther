@@ -1,5 +1,3 @@
-// src/pages/CatalogSettings/SettingsCategories.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SettingsCategories.css'; // Подключение стилей
@@ -25,6 +23,7 @@ function SettingsCategories() {
             setCategories(response.data); // Устанавливаем список категорий
         } catch (error) {
             console.error('Ошибка при загрузке категорий:', error);
+            alert('Не удалось загрузить категории. Попробуйте еще раз.');
         }
     };
 
@@ -34,6 +33,7 @@ function SettingsCategories() {
             setCategoryProducts(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке товаров категории:', error);
+            alert('Не удалось загрузить товары категории. Попробуйте еще раз.');
         }
     };
 
